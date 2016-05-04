@@ -1,8 +1,8 @@
 {
-  "name": "matlabanalysis",
+  "name": "parseDownloader",
   "version": "1.0.0",
-  "description": "",
-  "main": "getData.js",
+  "description": "Application to download a buch of data for the IoT project at TEC in Costa Rica",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
