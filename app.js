@@ -1,16 +1,16 @@
 var _ = require('underscore');
 var Parse = require('parse/node').Parse;
 var fs = require('fs');
-var config = require('config');
+var config = require('./config');
 
 // define a location. All sensors from all this machines will be downloaded.
-var myLocationID  = 'Z8Ksof1rzm';
+var myLocationID  = '1U97q8qaPi';
 
 
 // overwrite and limit to only this machines. leave empty if not needed.
 var limitToThisMachines = [
-  'S7OVisnVy4',
-  'K3YeIg1kza',
+  //'S7OVisnVy4',
+  //'K3YeIg1kza',
 ];
 
 // limit to only this sensor type.
@@ -24,6 +24,7 @@ var prefix = {
 }
 
 Parse.initialize(config.appKey, config.jsKey,config.masterKey);
+Parse.serverURL = config.serverURL;
 Parse.Cloud.useMasterKey();
 // ---------------------------------------------------------------------------------- machines
 // --------------------------------------------------- MODEL
@@ -77,21 +78,17 @@ var grandResults = {};
 var machinesResults;
 var machineONOFFResults;
 var R;
-Parse.User.logIn('olmo','123').then(function(thisUser){
-	console.log('logged in as ' + thisUser.get('username'));
-  //console.log((new Parse.Query(Parse.Role)).equalTo("users", Parse.User.current()).find())
-  var thisLocation = new LocationModel();
-  thisLocation.id = myLocationID;
-  console.log('--- set up location ' + myLocationID);
-  MachineQuery.equalTo('Location',thisLocation);
-  if(limitToThisMachines.length >0){
-    MachineQuery.containedIn('objectId',limitToThisMachines);
-  }
-  return MachineQuery.find();
 
-},function(error){
-  console.log('error login in');
-}).then(function(machinesResults_){
+
+
+var thisLocation = new LocationModel();
+thisLocation.id = myLocationID;
+console.log('--- set up location ' + myLocationID);
+MachineQuery.equalTo('Location',thisLocation);
+if(limitToThisMachines.length >0){
+  MachineQuery.containedIn('objectId',limitToThisMachines);
+}
+MachineQuery.find().then(function(machinesResults_){
   machinesResults = machinesResults_; // make variable globally accesible
   console.log('--- got ' + machinesResults.length + ' machines at this location');
 
