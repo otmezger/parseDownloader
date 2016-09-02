@@ -15,7 +15,7 @@ var limitToThisMachines = [
 
 // limit to only this sensor type.
 var getThisSensorTypes = [
-  '9Gy9tDuCaq'
+  'Al1xoM4dmy'
 ];
 
 var prefix = {
